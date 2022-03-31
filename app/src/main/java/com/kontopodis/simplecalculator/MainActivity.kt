@@ -97,7 +97,7 @@ class MainActivity : AppCompatActivity() {
 
     // TODO: percent check and create the decimal
     // TODO: restrict the insertion of 2+ operators
-    // TODO: the oposite has to add a - operator
+    // TODO: the oposite has to add a - operato
 
 
 }
