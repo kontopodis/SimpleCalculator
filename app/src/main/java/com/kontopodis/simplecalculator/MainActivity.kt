@@ -27,12 +27,12 @@ class MainActivity : AppCompatActivity() {
         val nine= findViewById<Button>(R.id.nine)
 
 
-        val plus = findViewById<Button>(R.id.plus)
-        val minus = findViewById<Button>(R.id.minus)
+        val addition = findViewById<Button>(R.id.plus)
+        val subtraction = findViewById<Button>(R.id.minus)
         val multiply = findViewById<Button>(R.id.multiply)
         val division = findViewById<Button>(R.id.division)
 
-        val percent = findViewById<Button>(R.id.percent)
+        val percent = findViewById<Button>(R.id.percent) // this has to create a double out.
         val clear = findViewById<Button>(R.id.erase)
         val delete = findViewById<Button>(R.id.delete)
         val decimal = findViewById<Button>(R.id.decimal)
@@ -53,10 +53,22 @@ class MainActivity : AppCompatActivity() {
         nine.setOnClickListener{addValue("9", panel)}
 
         delete.setOnClickListener { deleteValue( panel ) }
-    clear.setOnClickListener { clearAllValues(panel) }
+        clear.setOnClickListener { clearAllValues(panel) }
+        addition.setOnClickListener { addValue("+",panel) }
+        subtraction.setOnClickListener { addValue("-",panel) }
+        multiply.setOnClickListener { addValue("*",panel) }
+        division.setOnClickListener { addValue("/",panel) }
+        decimal.setOnClickListener { addValue(".",panel) }
+
+        equal.setOnClickListener { executeMath(panel) }
 
     }
 
+    private fun executeMath( panel:TextView){
+        val result = MathParser().mathFromString(panel.text.toString())
+        panel.text = result.toString()
+
+    }
    private fun addValue(value:String, view:TextView ){
        val text = "${view.text}${value}"
        view.text = text
@@ -82,6 +94,13 @@ class MainActivity : AppCompatActivity() {
 
 
 
+
+    // TODO: percent check and create the decimal
+    // TODO: restrict the insertion of 2+ operators
+    // TODO: the oposite has to add a - operator
+
+
 }
-fun Context.toast(message: CharSequence) =
-    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+fun Context.toast(message: CharSequence) = Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+
+
