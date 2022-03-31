@@ -24,30 +24,22 @@ class MathHandlerTest {
         assertEquals(math,1.0,0.001)
     }
 
+
+
     @Test
     fun sub() {
         val math = MathParser().sub(2.0,2.0)
         assertEquals(math,0.0,0.001)
     }
 
-    @Test
-    fun `String summary`() {
-        val math = MathParser().mathFromString("1a1+1")
-        assertEquals(12.0,math,0.001)
-    }
+
     @Test
     fun `When String is empty`(){
         val math = MathParser().mathFromString("")
         assertEquals(0.0,math,0.001)
     }
 
-    @Test
-    fun `String minus`(){
-        val string = "2-2"
 
-        val math:Double = MathParser().mathFromString(string)
-        assertEquals(4.0,math,0.001)
-    }
 
     @Test
     fun `Numbers list is not null`(){
@@ -83,4 +75,98 @@ class MathHandlerTest {
         assertEquals(numbers,list)
 
     }
+
+    @Test
+    fun `String minus`(){
+        val string = "2-2"
+
+        val math:Double = MathParser().mathFromString(string)
+        assertEquals(0.0,math,0.001)
+    }
+
+    @Test
+    fun `String summary`() {
+        val math = MathParser().mathFromString("11+1")
+        assertEquals(12.0,math,0.001)
+    }
+
+    @Test
+    fun `String multiply`() {
+        val math = MathParser().mathFromString("2*3")
+        assertEquals(6.0,math,0.001)
+    }
+
+    @Test
+    fun `String divide`() {
+        val math = MathParser().mathFromString("6/2")
+        assertEquals(3.0,math,0.001)
+    }
+
+    @Test
+    fun `1 Division and 1 Summary`() {
+        val math = MathParser().mathFromString("6/2+2")
+        assertEquals(5.0,math,0.001)
+    }
+
+    @Test
+    fun `1 Subtraction and 1 Division`() {
+        val math = MathParser().mathFromString("2-6/2")
+        assertEquals(-1.0,math,0.001)
+    }
+
+    @Test
+    fun `1 Division 1 Subtraction`() {
+        val math = MathParser().mathFromString("6/2-2")
+        assertEquals(1.0,math,0.001)
+    }
+
+    @Test
+    fun `1 multiply 1 summary`(){
+        val math = MathParser().mathFromString("6*2+2")
+        assertEquals(14.0,math,0.001)
+    }
+
+    @Test
+    fun `1 summary 1 multiply`(){
+        val math = MathParser().mathFromString("2+6*2")
+        assertEquals(14.0,math,0.001)
+    }
+
+    @Test
+    fun `1 addition 1 subtraction`(){
+        val math = MathParser().mathFromString("2-6+2")
+        assertEquals(-2.0,math,0.001)
+    }
+
+    @Test
+    fun `1  multiply 1 division`(){
+        val math = MathParser().mathFromString("6/2*2")
+        assertEquals(6.0,math,0.001)
+    }
+
+    @Test
+    fun `1  multiply 1 division 1 addition`(){
+        val math = MathParser().mathFromString("6/2*2+4")
+        assertEquals(10.0,math,0.001)
+    }
+
+    @Test
+    fun `1  multiply 1 division 1 subtraction 1 addition`(){
+        val math = MathParser().mathFromString("20-6/2*2+4")
+        assertEquals(18.0,math,0.001)
+    }
+
+    @Test
+    fun `long expression 1`(){
+        val math = MathParser().mathFromString("20-6/2*2+4/2+100*30+22")
+        assertEquals(3038.0,math,0.001)
+    }
+
+    @Test
+    fun `decimal`(){
+        val math = MathParser().mathFromString("0.2*25+3-3/4")
+        assertEquals(7.25,math,0.001)
+    }
+
+
 }
