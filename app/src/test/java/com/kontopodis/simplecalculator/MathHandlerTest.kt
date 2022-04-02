@@ -168,5 +168,59 @@ class MathHandlerTest {
         assertEquals(7.25,math,0.001)
     }
 
+    @Test
+    fun `is number 0 return true`(){
+        val char = '0'
+        val math = MathParser().isNumber(char)
+        assertEquals(true,math)
+    }
 
+
+    @Test
+    fun `is number plus sign returns false`(){
+        val char = '0'
+        val math = MathParser().isNumber(char)
+        assertEquals(true,math)
+    }
+
+
+    @Test
+    fun `get last number returns 1 digital number`(){
+        val expression = "12+2"
+        val math = MathParser().getLastNumber(expression)
+        assertEquals(2.0,math,0.001)
+    }
+
+    @Test
+    fun `get last number returns 2 digital number`(){
+        val expression = "12+12"
+        val math = MathParser().getLastNumber(expression)
+        assertEquals(12.0,math,0.001)
+    }
+
+    @Test
+    fun `get last number returns 0 number when given wrong parameters`(){
+        val expression = "12."
+        val math = MathParser().getLastNumber(expression)
+        assertEquals(0.0,math,0.001)
+    }
+
+    @Test
+    fun `get last number returns 3 digital numbers`(){
+        val expression = "12+234"
+        val math = MathParser().getLastNumber(expression)
+        assertEquals(234.0,math,0.001)
+    }
+
+    @Test
+    fun `makes percent`(){
+        val math = MathParser().toPercent(20.0)
+        assertEquals(0.2,math,0.001)
+    }
+
+    @Test
+    fun `trims last number`(){
+        val math = MathParser().trimLastNumber("12+45")
+        assertEquals("12+",math)
+    }
 }

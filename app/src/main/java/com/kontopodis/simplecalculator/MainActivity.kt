@@ -37,29 +37,30 @@ class MainActivity : AppCompatActivity() {
         val delete = findViewById<Button>(R.id.delete)
         val decimal = findViewById<Button>(R.id.decimal)
         val equal= findViewById<Button>(R.id.equal)
-        val oposite = findViewById<Button>(R.id.oposite)
+        val oposite = findViewById<Button>(R.id.division)
 
         val panel = findViewById<TextView>(R.id.panel)
 
-        zero.setOnClickListener{addValue("0", panel)}
-        one.setOnClickListener{addValue("1", panel)}
-        two.setOnClickListener{addValue("2", panel)}
-        three.setOnClickListener{addValue("3", panel)}
-        four.setOnClickListener{addValue("4", panel)}
-        five.setOnClickListener{addValue("5", panel)}
-        six.setOnClickListener{addValue("6", panel)}
-        seven.setOnClickListener{addValue("7", panel)}
-        eight.setOnClickListener{addValue("8", panel)}
-        nine.setOnClickListener{addValue("9", panel)}
+        zero.setOnClickListener{addValue('0', panel)}
+        one.setOnClickListener{addValue('1', panel)}
+        two.setOnClickListener{addValue('2', panel)}
+        three.setOnClickListener{addValue('3', panel)}
+        four.setOnClickListener{addValue('4', panel)}
+        five.setOnClickListener{addValue('5', panel)}
+        six.setOnClickListener{addValue('6', panel)}
+        seven.setOnClickListener{addValue('7', panel)}
+        eight.setOnClickListener{addValue('8', panel)}
+        nine.setOnClickListener{addValue('9', panel)}
 
         delete.setOnClickListener { deleteValue( panel ) }
         clear.setOnClickListener { clearAllValues(panel) }
-        addition.setOnClickListener { addValue("+",panel) }
-        subtraction.setOnClickListener { addValue("-",panel) }
-        multiply.setOnClickListener { addValue("*",panel) }
-        division.setOnClickListener { addValue("/",panel) }
-        decimal.setOnClickListener { addValue(".",panel) }
+        addition.setOnClickListener { addValue('+',panel) }
+        subtraction.setOnClickListener { addValue('-',panel) }
+        multiply.setOnClickListener { addValue('*',panel) }
+        division.setOnClickListener { addValue('/',panel) }
+        decimal.setOnClickListener { addValue('.',panel) }
 
+        percent.setOnClickListener { addPercent(panel) }
         equal.setOnClickListener { executeMath(panel) }
 
     }
@@ -69,9 +70,22 @@ class MainActivity : AppCompatActivity() {
         panel.text = result.toString()
 
     }
-   private fun addValue(value:String, view:TextView ){
-       val text = "${view.text}${value}"
-       view.text = text
+   private fun addValue(value:Char, view:TextView ){
+
+       if(MathParser().isNumber(value)){
+           val text = "${view.text}${value}"
+           view.text = text
+
+
+       }else{
+           if(check4Operator(view.text.last())){
+               this.toast("Last is an operator. Invalid expression")
+           }else{
+               val text = "${view.text}${value}"
+               view.text = text
+           }
+       }
+
     }
 
     private fun deleteValue(view:TextView){
@@ -92,10 +106,28 @@ class MainActivity : AppCompatActivity() {
         view.text = ""
     }
 
+    private fun addPercent(view:TextView){
+        val text = view.text
+
+        if(MathParser().isNumber(text.last())){
+            val lastNumber = MathParser().getLastNumber(text.toString())
+            val percent = MathParser().toPercent(lastNumber)
+            val trimmed = MathParser().trimLastNumber(text.toString())
+            view.text = trimmed+percent.toString()
+        }
+    }
+
+    private fun check4Operator(value:Char):Boolean{
+        println(value)
+        var result = false
+        if(value == '/' || value == '*' || value == '-' || value == '+' || value == '.'){
+            result = true
+        }
+        println(result)
+    return result
+    }
 
 
-
-    // TODO: percent check and create the decimal
     // TODO: restrict the insertion of 2+ operators
     // TODO: the oposite has to add a - operato
 

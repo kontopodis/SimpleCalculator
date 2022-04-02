@@ -137,6 +137,73 @@ class MathParser() {
 
     }
 
+    fun isNumber(value:Char):Boolean{
+        var result:Boolean = false
+        if(value!='.')
+        {result = numbersStrings.contains(value)}
+
+        return result
+    }
+
+    fun getLastNumber(expression:String):Double{
+        val iterator = expression.reversed().toCharArray().iterator()
+
+        var result = ""
+
+        var foundEnd = false
+        while(iterator.hasNext()){
+            val char = iterator.next()
+
+            if(char == '/' || char == '*' || char == '-' || char=='+' || char=='.'){
+                foundEnd = true
+            } // cacheOperators.contains(char) doesn't work. No Idea why...
+
+            if(char != '.'){
+                if(isNumber(char)){
+                    if(!foundEnd){
+                        result += char
+                    }
+
+                }
+            }
+
+        }
+
+        if(result == ""){result = "0"}
+        return result.reversed().toDouble()
+    }
+
+    fun toPercent(value:Double):Double{
+        return value/100
+    }
+
+    fun trimLastNumber(expression:String):String{
+        val iterator = expression.reversed().toCharArray().iterator()
+
+        var result = expression.reversed()
+
+        var foundEnd = false
+        while(iterator.hasNext()){
+            val char = iterator.next()
+
+            if(char == '/' || char == '*' || char == '-' || char=='+' || char=='.'){
+                foundEnd = true
+            } // cacheOperators.contains(char) doesn't work. No Idea why...
+
+            if(char != '.'){
+                if(isNumber(char)){
+                    if(!foundEnd){
+                      result = result.removeRange(0,1)
+                    }
+
+                }
+            }
+
+        }
+
+        if(result == ""){result = "0"}
+        return result.reversed()
+    }
 
     @TestOnly
     fun getNumbersLists(value:String):ArrayList<Double>{
