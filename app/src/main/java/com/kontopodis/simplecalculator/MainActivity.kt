@@ -77,16 +77,29 @@ class MainActivity : AppCompatActivity() {
            view.text = text
 
 
-       }else{
-           if(check4Operator(view.text.last())){
-               this.toast("Last is an operator. Invalid expression")
-           }else{
-               val text = "${view.text}${value}"
-               view.text = text
+       }else if(view.text == ""){
+
+               if(value=='-'){
+                   val text = "${view.text}${value}"
+                   view.text = text
+               }else{
+                   this.toast("Operator on empty value is not allowed")
+               }
+               }else{
+                     view.text.last().let{
+                         if(check4Operator(it)){
+                             this.toast("Last is an operator. Invalid expression")
+                         }else{
+
+                            val text = "${view.text}${value}"
+                            view.text = text
+                         }
+                     }
            }
+
        }
 
-    }
+
 
     private fun deleteValue(view:TextView){
         if( view.text == "" ){

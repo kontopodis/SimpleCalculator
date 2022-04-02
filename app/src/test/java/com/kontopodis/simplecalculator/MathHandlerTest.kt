@@ -223,4 +223,10 @@ class MathHandlerTest {
         val math = MathParser().trimLastNumber("12+45")
         assertEquals("12+",math)
     }
+
+    @Test
+    fun `First is a minus number`(){
+        val math = MathParser().mathFromString("-10+20")
+        assertEquals(10.0,math,0.001)
+    }
 }

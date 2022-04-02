@@ -115,8 +115,11 @@ class MathParser() {
 
         var num = ""
         var charCount = 0
+        var forCount = 0
+        var isFirstMinus = false
         for(i in equation){
             charCount++
+
 
 
             if(numbersStrings.contains(i)){
@@ -124,15 +127,30 @@ class MathParser() {
 
             }
             if(operators.contains(i)){
-                cacheNumbers.add(num.toDouble())
-                cacheOperators.add(i)
-                num = ""
+                if(forCount == 0){
+                    if(i == '-'){
+                        isFirstMinus = true
+                    }
+                }else{
+                    if(isFirstMinus){
+                        num = "-$num"
+                        cacheNumbers.add(num.toDouble())
+                        cacheOperators.add(i)
+                        num = ""
+                    }else{
+                        cacheNumbers.add(num.toDouble())
+                        cacheOperators.add(i)
+                        num = ""
+                    }
+
+                }
+
             }
             if(equation.toCharArray().size == charCount){
                 cacheNumbers.add(num.toDouble())
 
             }
-
+        forCount++
         }
 
     }
